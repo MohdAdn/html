@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://unpkg.com/konva@9.3.15/konva.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    body {
+      margin: 0;
+
+      background-color: beige;
+      padding: 0;
+    }
+  </style>
+  <body>
+    <div id="container"></div>
+    <script>
+      var height = document.getElementById("container");
+      function writeMessage(msg) {
+        text.text(msg);
+      }
+      var stage = new Konva.Stage({
+        container: "container",
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+      var layer = new Konva.Layer();
+      var triangle = new Konva.RegularPolygon({
+        x: 80,
+        y: 200,
+        sides: 3,
+        radius: 90,
+        fill: "#f2f2f2",
+        stroke: "red",
+        strokeWidth: 4,
+      });
+      var text = new Konva.Text({
+        x: 10,
+        y: 10,
+        fontFamily: "Calibri",
+        fontSize: 24,
+        text: "",
+        fill: "black",
+      });
+
+      triangle.on("mouseout", function () {
+        writeMessage("Mouseout triangle");
+      });
+      triangle.on("mousemove", function () {
+        var mousePos = stage.getPointerPosition();
+        writeMessage("X: " + mousePos.x + " " + "Y: " + mousePos.y);
+      });
+
+      var defaultBehaviourRect = new Konva.Rect({
+        width: 100,
+        height: 100,
+        fill: "green",
+      });
+      layer.add(defaultBehaviourRect);
+
+      var noPreventDefaultRect = new Konva.Rect({
+        x: 200,
+        y: 50,
+        width: 100,
+        height: 100,
+        fill: "red",
+        preventDefault: false,
+      });
+
+      layer.add(noPreventDefaultRect);
+
+      layer.add(triangle);
+      layer.add(text);
+      stage.add(layer);
+    </script>
+  </body>
+</html>
